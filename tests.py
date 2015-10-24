@@ -1,6 +1,58 @@
+from chess_challenge import ChessChallengeEngine
+from helpers import king_danger, knight_danger
 import unittest
 
-from chess_challenge import ChessChallengeEngine
+
+class HelpersTest(unittest.TestCase):
+    def test_king_danger_1(self):
+        """A dangerous move, both pieces on the same square, one is king"""
+        danger = king_danger(5, 4, 5, 4)
+        self.assertTrue(danger)
+
+    def test_king_danger_2(self):
+        """A dangerous move, a king is one square to left"""
+        danger = king_danger(4, 4, 5, 4)
+        self.assertTrue(danger)
+
+    def test_king_danger_3(self):
+        """A dangerous move, a king is one square to left"""
+        danger = king_danger(6, 4, 5, 4)
+        self.assertTrue(danger)
+
+    def test_king_danger_4(self):
+        """A dangerous move, a king is one square up"""
+        danger = king_danger(5, 4, 6, 4)
+        self.assertTrue(danger)
+
+    def test_king_danger_5(self):
+        """A dangerous move, a king is one square down"""
+        danger = king_danger(5, 4, 4, 4)
+        self.assertTrue(danger)
+
+    def test_king_danger_6(self):
+        """A dangerous move, a king is one square north-east"""
+        danger = king_danger(5, 4, 6, 3)
+        self.assertTrue(danger)
+
+    def test_king_danger_7(self):
+        """A dangerous move, a king is one square north-west"""
+        danger = king_danger(5, 4, 4, 3)
+        self.assertTrue(danger)
+
+    def test_king_danger_8(self):
+        """A dangerous move, a king is one square south-west"""
+        danger = king_danger(5, 4, 4, 5)
+        self.assertTrue(danger)
+
+    def test_king_danger_9(self):
+        """A dangerous move, a king is one square south-east"""
+        danger = king_danger(5, 4, 6, 5)
+        self.assertTrue(danger)
+
+    def test_king_danger_10(self):
+        """A safe move .. finally !"""
+        danger = king_danger(5, 4, 7, 5)
+        self.assertFalse(danger)
 
 
 class ChessChallengeTest(unittest.TestCase):
@@ -288,7 +340,6 @@ class ChessChallengeTest(unittest.TestCase):
                      ('Queen', 8, 5)]]
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_normal_8_queens"
 
     def test_3_bishops(self):
         expected = [[('Bishop', 1, 1), ('Bishop', 1, 2), ('Bishop', 1, 3)],
@@ -323,7 +374,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, len(pieces), len(pieces))
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_3_bishops"
 
     def test_2_knights_1_bishop(self):
         expected = [[('Bishop', 1, 1), ('Knight', 1, 2), ('Knight', 1, 3)],
@@ -369,7 +419,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, len(pieces), len(pieces))
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_2_knights_1_bishop"
 
     def test_impossible_configuration(self):
         """8 queens in a 6 * 6 board"""
@@ -379,7 +428,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 6, 6)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_impossible_configuration"
 
     def test_1_king_3_by_3_board(self):
         expected = [
@@ -397,7 +445,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_1_king_3_by_3_board"
 
     def test_1_queen_3_by_3_board(self):
         expected = [
@@ -415,7 +462,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_1_queen_3_by_3_board"
 
     def test_2_kings_3_by_3_board(self):
         expected = [
@@ -440,7 +486,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_2_kings_3_by_3_board"
 
     def test_1_knight_3_by_3_board(self):
         expected = [
@@ -458,7 +503,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_1_knight_3_by_3_board"
 
     def test_2_knights_3_by_3_board(self):
         expected = [
@@ -495,7 +539,6 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertEqual(expected, result)
-        print "test_2_knights_3_by_3_board"
 
 
 if __name__ == '__main__':
