@@ -4,54 +4,110 @@ import unittest
 
 
 class HelpersTest(unittest.TestCase):
+    def setUp(self):
+        self.row = 5
+        self.column = 4
+
     def test_king_danger_1(self):
         """A dangerous move, both pieces on the same square, one is king"""
-        danger = king_danger(5, 4, 5, 4)
+        danger = king_danger(self.row, self.column, self.row, self.column)
         self.assertTrue(danger)
 
     def test_king_danger_2(self):
-        """A dangerous move, a king is one square to left"""
-        danger = king_danger(4, 4, 5, 4)
+        """A dangerous move, a king is one square to the left"""
+        danger = king_danger(self.row, self.column, self.row - 1, self.column)
         self.assertTrue(danger)
 
     def test_king_danger_3(self):
-        """A dangerous move, a king is one square to left"""
-        danger = king_danger(6, 4, 5, 4)
+        """A dangerous move, a king is one square to the right"""
+        danger = king_danger(self.row, self.column, self.row + 1, self.column)
         self.assertTrue(danger)
 
     def test_king_danger_4(self):
         """A dangerous move, a king is one square up"""
-        danger = king_danger(5, 4, 6, 4)
+        danger = king_danger(self.row, self.column, self.row, self.column - 1)
         self.assertTrue(danger)
 
     def test_king_danger_5(self):
         """A dangerous move, a king is one square down"""
-        danger = king_danger(5, 4, 4, 4)
+        danger = king_danger(self.row, self.column, self.row, self.column + 1)
         self.assertTrue(danger)
 
     def test_king_danger_6(self):
         """A dangerous move, a king is one square north-east"""
-        danger = king_danger(5, 4, 6, 3)
+        danger = king_danger(self.row, self.column, self.row + 1,
+                             self.column - 1)
         self.assertTrue(danger)
 
     def test_king_danger_7(self):
         """A dangerous move, a king is one square north-west"""
-        danger = king_danger(5, 4, 4, 3)
+        danger = king_danger(self.row, self.column, self.row - 1,
+                             self.column - 1)
         self.assertTrue(danger)
 
     def test_king_danger_8(self):
         """A dangerous move, a king is one square south-west"""
-        danger = king_danger(5, 4, 4, 5)
+        danger = king_danger(self.row, self.column, self.row - 1,
+                             self.column + 1)
         self.assertTrue(danger)
 
     def test_king_danger_9(self):
         """A dangerous move, a king is one square south-east"""
-        danger = king_danger(5, 4, 6, 5)
+        danger = king_danger(self.row, self.column, self.row + 1,
+                             self.column + 1)
         self.assertTrue(danger)
 
     def test_king_danger_10(self):
         """A safe move .. finally !"""
-        danger = king_danger(5, 4, 7, 5)
+        danger = king_danger(self.row, self.column, self.row + 2, self.column)
+        self.assertFalse(danger)
+
+    def test_knight_danger_1(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row + 1,
+                               self.column - 2)
+        self.assertTrue(danger)
+
+    def test_knight_danger_2(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row + 2,
+                               self.column - 1)
+        self.assertTrue(danger)
+
+    def test_knight_danger_3(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row + 1,
+                               self.column + 2)
+        self.assertTrue(danger)
+
+    def test_knight_danger_4(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row - 1,
+                               self.column + 2)
+        self.assertTrue(danger)
+
+    def test_knight_danger_5(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row - 2,
+                               self.column + 1)
+        self.assertTrue(danger)
+
+    def test_knight_danger_6(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row - 2,
+                               self.column - 1)
+        self.assertTrue(danger)
+
+    def test_knight_danger_7(self):
+        """A dangerous move, a knight is on the end of an L-shaped distance"""
+        danger = knight_danger(self.row, self.column, self.row - 1,
+                               self.column - 2)
+        self.assertTrue(danger)
+
+    def test_knight_danger_8(self):
+        """A safe move"""
+        danger = knight_danger(self.row, self.column, self.row - 1,
+                               self.column - 1)
         self.assertFalse(danger)
 
 
