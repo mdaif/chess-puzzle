@@ -58,7 +58,6 @@ class ChessChallengeEngine(object):
         solutions = []
         seen = []
 
-
         for solution in prev_solutions:
 
             # the number of rows to be examined differs based on the type of
@@ -90,10 +89,11 @@ class ChessChallengeEngine(object):
         sure it's safe to place the current piece. Different types of
         attacks are determined based on the current piece's type and each
         other piece located in each sub-solution found so far"""
+
         for chess_piece in candidate_solution:
 
             attacking_piece, attacking_row, attacking_column = chess_piece
-            if current_piece == 'Queen' or attacking_piece == 'Queen':
+            if current_piece == 'Queen':
 
                 if diagonals_danger(row, column, attacking_row,
                                     attacking_column) or \
@@ -220,7 +220,7 @@ def main():
     input_pieces = ['Queen'] * 8
     # input_pieces = ['King', 'King', 'Queen', 'Queen', 'Bishop', 'Bishop',
     #                 'Knight']
-    input_pieces = ['King', 'King', 'Rook']
+    input_pieces = ['Queen', 'Knight']
 
     challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
@@ -230,7 +230,7 @@ def main():
     print "Program finished in approximately {} " \
           "seconds, number of unique solutions " \
           "found: {}".format((end_time - start_time).total_seconds(),
-                             len(end_results))
+                             int(len(end_results)))
 
 
 if __name__ == "__main__":

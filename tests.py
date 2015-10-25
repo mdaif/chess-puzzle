@@ -691,5 +691,14 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertListEqual(expected, result)
+
+    def test_1_queen_1_knight_3_by_3_board(self):
+        """That should result in 0 valid configurations"""
+        expected = []
+        pieces = ['Knight', 'Queen']
+        engine = ChessChallengeEngine(pieces, 3, 3)
+        result = engine.execute()
+        self.assertListEqual(expected, result)
+
 if __name__ == '__main__':
     unittest.main()
