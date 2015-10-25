@@ -155,14 +155,14 @@ class HelpersTest(unittest.TestCase):
                                       self.column)
         self.assertTrue(danger)
 
-    def row_or_column_danger_2(self):
+    def row_or_column_danger_3(self):
         """Two pieces on different rows and columns"""
 
         danger = row_or_column_danger(self.row, self.column, self.row + 5,
                                       self.column + 3)
         self.assertFalse(danger)
 
-        
+
 class ChessChallengeTest(unittest.TestCase):
     def test_normal_8_queens(self):
         """Happy path, simplest version of the problem 8 queens, 8 * 8 board"""
