@@ -1,3 +1,4 @@
+"""test helper functions and main functionality."""
 import unittest
 
 from chess_challenge import ChessChallengeEngine
@@ -697,6 +698,56 @@ class ChessChallengeTest(unittest.TestCase):
         expected = []
         pieces = ['Knight', 'Queen']
         engine = ChessChallengeEngine(pieces, 3, 3)
+        result = engine.execute()
+        self.assertListEqual(expected, result)
+
+
+    def test_1_queen_1_knight_4_by_4_board(self):
+        """That should result in 40 configurations"""
+        expected = [
+            [('Knight', 1, 1), ('Queen', 2, 4)],
+            [('Knight', 1, 1), ('Queen', 3, 4)],
+            [('Knight', 1, 1), ('Queen', 4, 2)],
+            [('Knight', 1, 1), ('Queen', 4, 3)],
+            [('Knight', 1, 2), ('Queen', 4, 1)],
+            [('Knight', 1, 2), ('Queen', 4, 3)],
+            [('Knight', 1, 2), ('Queen', 4, 4)],
+            [('Knight', 1, 3), ('Queen', 4, 1)],
+            [('Knight', 1, 3), ('Queen', 4, 2)],
+            [('Knight', 1, 3), ('Queen', 4, 4)],
+            [('Knight', 1, 4), ('Queen', 2, 1)],
+            [('Knight', 1, 4), ('Queen', 3, 1)],
+            [('Knight', 1, 4), ('Queen', 4, 2)],
+            [('Knight', 1, 4), ('Queen', 4, 3)],
+            [('Knight', 2, 1), ('Queen', 1, 4)],
+            [('Knight', 2, 1), ('Queen', 3, 4)],
+            [('Knight', 2, 1), ('Queen', 4, 4)],
+            [('Knight', 2, 4), ('Queen', 1, 1)],
+            [('Knight', 2, 4), ('Queen', 3, 1)],
+            [('Knight', 2, 4), ('Queen', 4, 1)],
+            [('Knight', 3, 1), ('Queen', 1, 4)],
+            [('Knight', 3, 1), ('Queen', 2, 4)],
+            [('Knight', 3, 1), ('Queen', 4, 4)],
+            [('Knight', 3, 4), ('Queen', 1, 1)],
+            [('Knight', 3, 4), ('Queen', 2, 1)],
+            [('Knight', 3, 4), ('Queen', 4, 1)],
+            [('Knight', 4, 1), ('Queen', 1, 2)],
+            [('Knight', 4, 1), ('Queen', 1, 3)],
+            [('Knight', 4, 1), ('Queen', 2, 4)],
+            [('Knight', 4, 1), ('Queen', 3, 4)],
+            [('Knight', 4, 2), ('Queen', 1, 1)],
+            [('Knight', 4, 2), ('Queen', 1, 3)],
+            [('Knight', 4, 2), ('Queen', 1, 4)],
+            [('Knight', 4, 3), ('Queen', 1, 1)],
+            [('Knight', 4, 3), ('Queen', 1, 2)],
+            [('Knight', 4, 3), ('Queen', 1, 4)],
+            [('Knight', 4, 4), ('Queen', 1, 2)],
+            [('Knight', 4, 4), ('Queen', 1, 3)],
+            [('Knight', 4, 4), ('Queen', 2, 1)],
+            [('Knight', 4, 4), ('Queen', 3, 1)],
+        ]
+        pieces = ['Knight', 'Queen']
+        engine = ChessChallengeEngine(pieces, 4, 4)
         result = engine.execute()
         self.assertListEqual(expected, result)
 

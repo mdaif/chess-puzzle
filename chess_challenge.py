@@ -1,21 +1,31 @@
-"""Chess Challenge is a module that aims to solve a (REALLY)  generalized
-version of the famous 8-queens puzzle"""
+"""Solve a generalized version of the 8-queens puzzle.
+
+The core functionality of the module is the ChessChallengeEngine class. The
+input is provided via argparse parser.
+"""
 
 import datetime
 from helpers import king_danger, knight_danger, diagonals_danger, \
     row_or_column_danger
 
-DEBUG = False
-
 
 class ChessChallengeEngine(object):
-    """ChessChallengeEngine is the core component of the module,
+    """ Manage chess challenge solution.
+
+    ChessChallengeEngine is the core component of the module,
     it is initialized by the chess pieces to be put on the chess board,
-    the board width, and the board height, running execute method results in
-    calculating the unique configurations of the pieces placement on the
-    board"""
+    the board width, and the board height, running execute public method
+    results in calculating the unique configurations of the pieces
+    placement on the board"""
 
     def __init__(self, pieces, board_width, board_height):
+        """Initialize ChessChallengeEngine with pieces, board size.
+
+        Arguments:
+        pieces -- a list of chess pieces
+        board_width -- width of the board
+        board_height -- height of the board
+        """
         self.pieces = sorted(
             pieces)  # sorting lexicographically to make sure all possible
         # permutations of the same problem maps to the same input
@@ -25,35 +35,36 @@ class ChessChallengeEngine(object):
         self.all_pieces = pieces  # won't be decremented at each step
 
     def execute(self):
-        """The main engine's method, when called it runs the chess puzzle
-        algorithm, returning all unique configurations of the chess pieces
-        on the chess board"""
+        """Return all unique configurations."""
         solutions = [[]]
-        for _ in range(self.board_height):  # for each row of the board
-            if self.pieces:
-                solutions, self.pieces = self._add_one_piece(self.pieces,
-                                                             self.board_height,
-                                                             solutions)
+
+        # we check if all the pieces are exhausted when all the board rows
+        # are checked, if not , we start over.
+        for piece in range(len(self.pieces)):
+            for _ in range(self.board_height):  # for each row of the board
+                solutions, self.pieces = \
+                    self._add_one_piece(self.pieces, self.board_height,
+                                        solutions)
                 # after first iteration, we can find the inserted pieces are
                 #  less than the expected to be inserted.
                 if len(solutions) < len(self.pieces):
                     return [[]]
 
-        for piece in range(len(self.pieces)):
-            for _ in range(self.board_height):
-                print "processing piece: ", piece
-                solutions, self.pieces = self._add_one_piece(self.pieces,
-                                                             self.board_height,
-                                                             solutions)
-
                 if not self.pieces:
                     return solutions
+
         return solutions
 
     def _add_one_piece(self, pieces, columns, prev_solutions):
-        """Internal method, used by execute method to scan the board for
-        possible attacks of already placed pieces, it's run each time a new
-        piece is added."""
+        """Adds next chess piece to a safe place on the board.
+
+        Arguments:
+        pieces -- list of remaining chess pieces to be placed.
+        columns -- the upper bound of columns to be scanned for a threat.
+        prev_solutions -- a list of all the previously calculated safe
+        positions.
+        """
+
         current_piece = pieces[0]
         solutions = []
         seen = []
@@ -66,8 +77,8 @@ class ChessChallengeEngine(object):
             # number of pieces > 7 (that's an empirical observation). That
             # is a corner case and we should then only examine the row next
             # to the row we already examined.
-            rows = len(solution) + 2 if set(self.all_pieces) == set([
-                'Queen']) and len(
+            rows = len(solution) + 2 if set(self.all_pieces) == {'Queen'} \
+                                        and len(
                 self.all_pieces) > 7 else self.board_height + 1
             for row in range(1, rows):
                 for column in range(1, columns + 1):
@@ -84,11 +95,20 @@ class ChessChallengeEngine(object):
 
     @staticmethod
     def _under_attack(current_piece, row, column, candidate_solution):
-        """Internal method, each time _add_one_piece finds a potential
+        """Checks if the position is safe.
+
+        Internal method, each time _add_one_piece finds a potential
         location (indicated by row, column) it calls this method to make
         sure it's safe to place the current piece. Different types of
         attacks are determined based on the current piece's type and each
-        other piece located in each sub-solution found so far"""
+        other piece located in each sub-solution found so far
+
+        Arguments:
+        current_piece -- the type of the current piece (Knight, Queen, .. etc)
+        row -- the next row to be scanned for threats.
+        column -- the next column to be scanned for threats.
+        candidate_solution -- one of the safe solutions calculated so far.
+        """
 
         for chess_piece in candidate_solution:
 
@@ -117,7 +137,8 @@ class ChessChallengeEngine(object):
                 elif attacking_piece == 'Queen' and \
                         (diagonals_danger(row, column, attacking_row,
                                           attacking_column) or
-                            row_or_column_danger(row, column, attacking_row,
+                            row_or_column_danger(row, column,
+                                                 attacking_row,
                                                  attacking_column)):
                     return True
 
@@ -148,7 +169,8 @@ class ChessChallengeEngine(object):
                 elif attacking_piece == 'Queen' and \
                         (diagonals_danger(row, column, attacking_row,
                                           attacking_column) or
-                            row_or_column_danger(row, column, attacking_row,
+                            row_or_column_danger(row, column,
+                                                 attacking_row,
                                                  attacking_column)):
                     return True
 
@@ -158,7 +180,8 @@ class ChessChallengeEngine(object):
                     return True
 
             elif current_piece == 'Knight':
-                if knight_danger(attacking_row, attacking_column, row, column):
+                if knight_danger(attacking_row, attacking_column, row,
+                                 column):
                     return True
 
                 if attacking_piece == 'Bishop' and \
@@ -179,7 +202,8 @@ class ChessChallengeEngine(object):
                 elif attacking_piece == 'Queen' and \
                         (diagonals_danger(row, column, attacking_row,
                                           attacking_column) or
-                            row_or_column_danger(row, column, attacking_row,
+                            row_or_column_danger(row, column,
+                                                 attacking_row,
                                                  attacking_column)):
                     return True
 
@@ -213,16 +237,11 @@ class ChessChallengeEngine(object):
 
 
 def main():
-    """"main method, it's run if the module is executed"""
-
+    """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-
-    input_pieces = ['Queen'] * 8
-    # input_pieces = ['King', 'King', 'Queen', 'Queen', 'Bishop', 'Bishop',
-    #                 'Knight']
-    input_pieces = ['Queen', 'Knight']
-
-    challenge = ChessChallengeEngine(input_pieces, 3, 3)
+    input_pieces = ['King', 'King', 'Queen', 'Queen', 'Bishop', 'Bishop',
+                    'Knight']
+    challenge = ChessChallengeEngine(input_pieces, 7, 7)
     end_results = challenge.execute()
     for end_result in end_results:
         print end_result
