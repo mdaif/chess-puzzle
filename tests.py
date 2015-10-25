@@ -1,5 +1,6 @@
 from chess_challenge import ChessChallengeEngine
-from helpers import king_danger, knight_danger
+from helpers import king_danger, knight_danger, diagonals_danger, \
+    row_or_column_danger
 import unittest
 
 
@@ -110,6 +111,35 @@ class HelpersTest(unittest.TestCase):
                                self.column - 1)
         self.assertFalse(danger)
 
+    def test_diagonals_danger_1(self):
+        """Two pieces are placed on the same diagonal"""
+        danger = diagonals_danger(self.row, self.column, self.row + 2,
+                                  self.column - 2)
+        self.assertTrue(danger)
+
+    def test_diagonals_danger_2(self):
+        """Two pieces are placed on the same diagonal"""
+        danger = diagonals_danger(self.row, self.column, self.row + 2,
+                                  self.column + 2)
+        self.assertTrue(danger)
+
+    def test_diagonals_danger_3(self):
+        """Two pieces are placed on the same diagonal"""
+        danger = diagonals_danger(self.row, self.column, self.row - 2,
+                                  self.column + 2)
+        self.assertTrue(danger)
+
+    def test_diagonals_danger_4(self):
+        """Two pieces are placed on the same diagonal"""
+        danger = diagonals_danger(self.row, self.column, self.row - 2,
+                                  self.column - 2)
+        self.assertTrue(danger)
+
+    def test_diagonals_danger_5(self):
+        """Two pieces are NOT placed on the same diagonal"""
+        danger = diagonals_danger(self.row, self.column, self.row,
+                                  self.column - 2)
+        self.assertFalse(danger)
 
 class ChessChallengeTest(unittest.TestCase):
     def test_normal_8_queens(self):
