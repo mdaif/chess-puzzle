@@ -118,7 +118,6 @@ class ChessChallengeEngine(object):
                         attacking_row, attacking_column, row, column):
                     return True
 
-
             elif current_piece == 'Rook':
                 if row_or_column_danger(row, column, attacking_row,
                                         attacking_column):
@@ -129,10 +128,17 @@ class ChessChallengeEngine(object):
                                                              row, column):
                     return True
 
-                if attacking_piece == 'Knight' and knight_danger( \
+                elif attacking_piece == 'Knight' and knight_danger( \
                         attacking_row, attacking_column, row,
                         column):
                     return True
+
+                elif attacking_piece == 'Queen' and (diagonals_danger(row,
+                                                                     column, attacking_row,
+                                    attacking_column) or row_or_column_danger(row, column, attacking_row,
+                                             attacking_column)):
+                    return True
+
 
             elif current_piece == 'Knight':
                 if knight_danger(attacking_row, attacking_column, row, column):
