@@ -2,9 +2,10 @@
 version of the famous 8-queens puzzle"""
 
 import datetime
-
 from helpers import king_danger, knight_danger, diagonals_danger, \
     row_or_column_danger
+
+DEBUG = False
 
 
 class ChessChallengeEngine(object):
@@ -37,7 +38,16 @@ class ChessChallengeEngine(object):
                 #  less than the expected to be inserted.
                 if len(solutions) < len(self.pieces):
                     return [[]]
+  
+        for piece in range(len(self.pieces)):
+            for _ in range(self.board_height):
+                print "processing piece: ", piece
+                solutions, self.pieces = self._add_one_piece(self.pieces,
+                                                             self.board_height,
+                                                             solutions)
 
+                if not self.pieces:
+                    return solutions
         return solutions
 
     def _add_one_piece(self, pieces, columns, prev_solutions):
@@ -47,6 +57,7 @@ class ChessChallengeEngine(object):
         current_piece = pieces[0]
         solutions = []
         seen = []
+
 
         for solution in prev_solutions:
 
@@ -205,11 +216,11 @@ def main():
     """"main method, it's run if the module is executed"""
 
     start_time = datetime.datetime.now()
-    #    pieces = ['Rook', 'Rook', 'Knight', 'Knight', 'Knight', 'Knight']
-    # pieces = ['Knight', 'Knight', 'Bishop']
-    input_pieces = ['Queen'] * 8
 
-    challenge = ChessChallengeEngine(input_pieces, 8, 8)
+    #input_pieces = ['Queen'] * 8
+    input_pieces = ['Knight', 'Knight', 'Knight', 'Knight', 'Rook', 'Rook']
+
+    challenge = ChessChallengeEngine(input_pieces, 4, 4)
     end_results = challenge.execute()
     for end_result in end_results:
         print end_result
