@@ -139,6 +139,10 @@ class ChessChallengeEngine(object):
                                              attacking_column)):
                     return True
 
+                elif attacking_piece == 'Bishop' and diagonals_danger(row,
+                                                                     column, attacking_row,
+                                    attacking_column):
+                    return True
 
             elif current_piece == 'Knight':
                 if knight_danger(attacking_row, attacking_column, row, column):
@@ -147,6 +151,22 @@ class ChessChallengeEngine(object):
                 if attacking_piece == 'Bishop' and \
                         diagonals_danger(row, column, attacking_row,
                                          attacking_column):
+                    return True
+
+                elif attacking_piece == 'King' and king_danger(attacking_row,
+                                                             attacking_column,
+                                                             row, column):
+                    return True
+
+                elif attacking_piece == 'Rook' and \
+                        row_or_column_danger(row, column, attacking_row,
+                                             attacking_column):
+                    return True
+
+                elif attacking_piece == 'Queen' and (diagonals_danger(row,
+                                                                     column, attacking_row,
+                                    attacking_column) or row_or_column_danger(row, column, attacking_row,
+                                             attacking_column)):
                     return True
 
             elif current_piece == 'Bishop' or attacking_piece == 'Bishop':
@@ -158,6 +178,22 @@ class ChessChallengeEngine(object):
                     if knight_danger(attacking_row, attacking_column, row,
                                      column):
                         return True
+                    
+                elif attacking_piece == 'King' and king_danger(attacking_row,
+                                                             attacking_column,
+                                                             row, column):
+                    return True
+
+                elif attacking_piece == 'Rook' and \
+                        row_or_column_danger(row, column, attacking_row,
+                                             attacking_column):
+                    return True
+
+                elif attacking_piece == 'Queen' and (diagonals_danger(row,
+                                                                     column, attacking_row,
+                                    attacking_column) or row_or_column_danger(row, column, attacking_row,
+                                             attacking_column)):
+                    return True
         return False
 
 
