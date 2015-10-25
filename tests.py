@@ -1,7 +1,8 @@
+import unittest
+
 from chess_challenge import ChessChallengeEngine
 from helpers import king_danger, knight_danger, diagonals_danger, \
     row_or_column_danger
-import unittest
 
 
 class HelpersTest(unittest.TestCase):
@@ -645,6 +646,33 @@ class ChessChallengeTest(unittest.TestCase):
         ]
         pieces = ['Knight', 'Knight']
         engine = ChessChallengeEngine(pieces, 3, 3)
+        result = engine.execute()
+        self.assertEqual(expected, result)
+
+    def test_4_knights_2_rooks_4_by_4_board(self):
+        """One of the two examples given, 4 knights, 2 rooks on a 4 x 4
+        board"""
+        expected = [
+            [('Knight', 1, 1), ('Knight', 1, 3), ('Knight', 3, 1),
+             ('Knight', 3, 3), ('Rook', 2, 2), ('Rook', 4, 4)],
+            [('Knight', 1, 1), ('Knight', 1, 3), ('Knight', 3, 1),
+             ('Knight', 3, 3), ('Rook', 2, 4), ('Rook', 4, 2)],
+            [('Knight', 1, 2), ('Knight', 1, 4), ('Knight', 3, 2),
+             ('Knight', 3, 4), ('Rook', 2, 1), ('Rook', 4, 3)],
+            [('Knight', 1, 2), ('Knight', 1, 4), ('Knight', 3, 2),
+             ('Knight', 3, 4), ('Rook', 2, 3), ('Rook', 4, 1)],
+            [('Knight', 2, 1), ('Knight', 2, 3), ('Knight', 4, 1),
+             ('Knight', 4, 3), ('Rook', 1, 2), ('Rook', 3, 4)],
+            [('Knight', 2, 1), ('Knight', 2, 3), ('Knight', 4, 1),
+             ('Knight', 4, 3), ('Rook', 1, 4), ('Rook', 3, 2)],
+            [('Knight', 2, 2), ('Knight', 2, 4), ('Knight', 4, 2),
+             ('Knight', 4, 4), ('Rook', 1, 1), ('Rook', 3, 3)],
+            [('Knight', 2, 2), ('Knight', 2, 4), ('Knight', 4, 2),
+             ('Knight', 4, 4), ('Rook', 1, 3), ('Rook', 3, 1)]
+        ]
+
+        pieces = ['Knight', 'Knight', 'Knight', 'Knight', 'Rook', 'Rook']
+        engine = ChessChallengeEngine(pieces, 4, 4)
         result = engine.execute()
         self.assertEqual(expected, result)
 

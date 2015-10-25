@@ -38,7 +38,7 @@ class ChessChallengeEngine(object):
                 #  less than the expected to be inserted.
                 if len(solutions) < len(self.pieces):
                     return [[]]
-  
+
         for piece in range(len(self.pieces)):
             for _ in range(self.board_height):
                 print "processing piece: ", piece
