@@ -1,8 +1,10 @@
 """Chess Challenge is a module that aims to solve a (REALLY)  generalized
 version of the famous 8-queens puzzle"""
+
 import datetime
 
-from helpers import king_danger, knight_danger
+from helpers import king_danger, knight_danger, diagonals_danger, \
+    row_or_column_danger
 
 
 class ChessChallengeEngine(object):
@@ -81,52 +83,54 @@ class ChessChallengeEngine(object):
 
             attacking_piece, attacking_row, attacking_column = chess_piece
             if current_piece == 'Queen' or attacking_piece == 'Queen':
-                if attacking_row == row:
-                    return True  # Check row
-                if attacking_column == column:
-                    return True  # Check column
-                if (column - attacking_column) == (row - attacking_row):
-                    return True  # Check left diagonal
-                if (column - attacking_column) == -(row - attacking_row):
-                    return True  # Check right diagonal
 
-            elif current_piece == 'King':
-                if king_danger(attacking_row, attacking_column, row, column):
+                if diagonals_danger(row, column, attacking_row,
+                                    attacking_column) or \
+                        row_or_column_danger(row, column, attacking_row,
+                                             attacking_column):
                     return True
-                if attacking_piece == 'Rook':
-                    if attacking_row == row:
-                        return True  # Check row
-                    if attacking_column == column:
-                        return True  # Check column
-            elif current_piece == 'Rook':
-                if attacking_row == row:
-                    return True  # Check row
-                if attacking_column == column:
-                    return True  # Check column
-                if attacking_piece == 'King':
-                    if king_danger(attacking_row, attacking_column, row,
-                                   column):
-                        return True
+
                 if attacking_piece == 'Knight':
                     if knight_danger(attacking_row, attacking_column, row,
                                      column):
                         return True
 
+            elif current_piece == 'King':
+                if king_danger(attacking_row, attacking_column, row, column):
+                    return True
+                if attacking_piece == 'Rook' and \
+                        row_or_column_danger(row, column, attacking_row,
+                                             attacking_column):
+                    return True
+
+            elif current_piece == 'Rook':
+                if row_or_column_danger(row, column, attacking_row,
+                                        attacking_column):
+                    return True
+
+                if attacking_piece == 'King' and king_danger(attacking_row,
+                                                             attacking_column,
+                                                             row, column):
+                    return True
+
+                if attacking_piece == 'Knight' and knight_danger( \
+                        attacking_row, attacking_column, row,
+                        column):
+                    return True
+
             elif current_piece == 'Knight':
                 if knight_danger(attacking_row, attacking_column, row, column):
                     return True
 
-                if attacking_piece == 'Bishop':
-                    if (column - attacking_column) == (row - attacking_row):
-                        return True  # Check left diagonal
-                    if (column - attacking_column) == -(row - attacking_row):
-                        return True  # Check right diagonal
+                if attacking_piece == 'Bishop' and \
+                        diagonals_danger(row, column, attacking_row,
+                                         attacking_column):
+                    return True
 
             elif current_piece == 'Bishop' or attacking_piece == 'Bishop':
-                if (column - attacking_column) == (row - attacking_row):
-                    return True  # Check left diagonal
-                if (column - attacking_column) == -(row - attacking_row):
-                    return True  # Check right diagonal
+                if diagonals_danger(row, column, attacking_row,
+                                    attacking_column):
+                    return True
 
                 if attacking_piece == 'Knight':
                     if knight_danger(attacking_row, attacking_column, row,
