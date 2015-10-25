@@ -217,10 +217,12 @@ def main():
 
     start_time = datetime.datetime.now()
 
-    #input_pieces = ['Queen'] * 8
-    input_pieces = ['Knight', 'Knight', 'Knight', 'Knight', 'Rook', 'Rook']
+    input_pieces = ['Queen'] * 8
+    # input_pieces = ['King', 'King', 'Queen', 'Queen', 'Bishop', 'Bishop',
+    #                 'Knight']
+    input_pieces = ['King', 'King', 'Rook']
 
-    challenge = ChessChallengeEngine(input_pieces, 4, 4)
+    challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:
         print end_result
