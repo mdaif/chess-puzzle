@@ -141,6 +141,28 @@ class HelpersTest(unittest.TestCase):
                                   self.column - 2)
         self.assertFalse(danger)
 
+    def row_or_column_danger_1(self):
+        """Two pieces on the same row but different columns"""
+
+        danger = row_or_column_danger(self.row, self.column, self.row,
+                                      self.column + 5)
+        self.assertTrue(danger)
+
+    def row_or_column_danger_2(self):
+        """Two pieces on the same column but different rows"""
+
+        danger = row_or_column_danger(self.row, self.column, self.row + 5,
+                                      self.column)
+        self.assertTrue(danger)
+
+    def row_or_column_danger_2(self):
+        """Two pieces on different rows and columns"""
+
+        danger = row_or_column_danger(self.row, self.column, self.row + 5,
+                                      self.column + 3)
+        self.assertFalse(danger)
+
+        
 class ChessChallengeTest(unittest.TestCase):
     def test_normal_8_queens(self):
         """Happy path, simplest version of the problem 8 queens, 8 * 8 board"""
