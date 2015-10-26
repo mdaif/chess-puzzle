@@ -14,6 +14,7 @@ class PieceType(object):
 
 class RepresentationMetaClass(type):
     """Enable custom representation for class objects."""
+
     def __str__(cls):
         return cls.representation
 
@@ -28,8 +29,9 @@ class ChessPiece(object):
     piece_type = None
     representation = "ChessPiece"
 
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column, row,
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row,
                       column):
         """Checks if current piece is threatened by another piece.
 
@@ -47,53 +49,21 @@ class ChessPiece(object):
         """
         pass
 
+    @classmethod
+    def _check_common_threats(cls, attacking_piece, attacking_row,
+                              attacking_column, row,
+                              column):
+        """Check for threats from already allocated pieces.
 
-class Queen(ChessPiece):
-    """Extend ChessPiece to implement a Queen.
+        Arguments:
+        attacking_piece -- A class that extends ChessPiece
+        attacking_row -- the row at which the attacking piece is located.
+        attacking_column -- the column at which the attacking piece is
+        located.
+        row -- the row at which the current piece is located.
+        column -- the column at which the current piece is located.
+        """
 
-    class variables:
-    piece_type -- a numeric value that represents a queen
-    representation -- a string to be displayed when printing to console.
-
-    Methods:
-    is_threatened -- static method
-    """
-    piece_type = PieceType.Queen
-    representation = 'Queen'
-
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column, row,
-                      column):
-        """Override ChessPiece is_threatened abstract static method."""
-        if diagonals_danger(attacking_row, attacking_column, row, column) or \
-                row_or_column_danger(attacking_row, attacking_column, row,
-                                     column):
-            return True
-
-        if attacking_piece.piece_type == PieceType.Knight:
-            if knight_danger(attacking_row, attacking_column, row, column):
-                return True
-
-
-class King(ChessPiece):
-    """Extend ChessPiece to implement a King.
-
-    class variables:
-    piece_type -- a numeric value that represents a king
-    representation -- a string to be displayed when printing to console.
-
-    Methods:
-    is_threatened -- static method
-    """
-    piece_type = PieceType.King
-    representation = 'King'
-
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column,
-                      row, column):
-        """Override ChessPiece is_threatened abstract static method."""
-        if king_danger(attacking_row, attacking_column, row, column):
-            return True
         if attacking_piece.piece_type == PieceType.Rook and \
                 row_or_column_danger(attacking_row, attacking_column, row,
                                      column):
@@ -114,6 +84,66 @@ class King(ChessPiece):
                 attacking_row, attacking_column, row, column):
             return True
 
+        elif attacking_piece.piece_type == PieceType.King and king_danger(
+                attacking_row, attacking_column, row, column):
+            return True
+
+        return False
+
+
+class Queen(ChessPiece):
+    """Extend ChessPiece to implement a Queen.
+
+    class variables:
+    piece_type -- a numeric value that represents a queen
+    representation -- a string to be displayed when printing to console.
+
+    Methods:
+    is_threatened -- class method
+    """
+    piece_type = PieceType.Queen
+    representation = 'Queen'
+
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row,
+                      column):
+        """Override ChessPiece is_threatened abstract class method."""
+        if diagonals_danger(attacking_row, attacking_column, row, column) or \
+                row_or_column_danger(attacking_row, attacking_column, row,
+                                     column):
+            return True
+        if cls._check_common_threats(attacking_piece, attacking_row,
+                                     attacking_column, row, column):
+            return True
+        return False
+
+
+class King(ChessPiece):
+    """Extend ChessPiece to implement a King.
+
+    class variables:
+    piece_type -- a numeric value that represents a king
+    representation -- a string to be displayed when printing to console.
+
+    Methods:
+    is_threatened -- class method
+    """
+    piece_type = PieceType.King
+    representation = 'King'
+
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row, column):
+        """Override ChessPiece is_threatened abstract class method."""
+        if king_danger(attacking_row, attacking_column, row, column):
+            return True
+
+        if cls._check_common_threats(attacking_piece, attacking_row,
+                                     attacking_column, row, column):
+            return True
+        return False
+
 
 class Rook(ChessPiece):
     """Extend ChessPiece to implement a Rook.
@@ -123,37 +153,23 @@ class Rook(ChessPiece):
     representation -- a string to be displayed when printing to console.
 
     Methods:
-    is_threatened -- static method
+    is_threatened -- class method
     """
     piece_type = PieceType.Rook
     representation = 'Rook'
 
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column, row,
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row,
                       column):
-        """Override ChessPiece is_threatened abstract static method."""
+        """Override ChessPiece is_threatened abstract class method."""
         if row_or_column_danger(attacking_row, attacking_column, row, column):
             return True
 
-        if attacking_piece.piece_type == PieceType.King and king_danger(
-                attacking_row, attacking_column, row, column):
+        if cls._check_common_threats(attacking_piece, attacking_row,
+                                     attacking_column, row, column):
             return True
-
-        elif attacking_piece.piece_type == PieceType.Knight and knight_danger(
-                attacking_row, attacking_column, row, column):
-            return True
-
-        elif attacking_piece.piece_type == PieceType.Queen and \
-                (diagonals_danger(attacking_row, attacking_column, row,
-                                  column) or
-                    row_or_column_danger(attacking_row, attacking_column,
-                                         row, column)):
-            return True
-
-        elif attacking_piece.piece_type == PieceType.Bishop and \
-                diagonals_danger(attacking_row, attacking_column, row,
-                                 column):
-            return True
+        return False
 
 
 class Knight(ChessPiece):
@@ -164,38 +180,23 @@ class Knight(ChessPiece):
     representation -- a string to be displayed when printing to console.
 
     Methods:
-    is_threatened -- static method
+    is_threatened -- class method
     """
     piece_type = PieceType.Knight
     representation = 'Knight'
 
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column, row,
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row,
                       column):
-        """Override ChessPiece is_threatened abstract static method."""
+        """Override ChessPiece is_threatened abstract class method."""
         if knight_danger(attacking_row, attacking_column, row, column):
             return True
 
-        if attacking_piece.piece_type == PieceType.Bishop and \
-                diagonals_danger(attacking_row, attacking_column, row,
-                                 column):
+        if cls._check_common_threats(attacking_piece, attacking_row,
+                                     attacking_column, row, column):
             return True
-
-        elif attacking_piece.piece_type == PieceType.King and \
-                king_danger(attacking_row, attacking_column, row, column):
-            return True
-
-        elif attacking_piece.piece_type == PieceType.Rook and \
-                row_or_column_danger(attacking_row, attacking_column, row,
-                                     column):
-            return True
-
-        elif attacking_piece.piece_type == PieceType.Queen and \
-                (diagonals_danger(attacking_row, attacking_column, row,
-                                  column) or
-                    row_or_column_danger(attacking_row, attacking_column,
-                                         row, column)):
-            return True
+        return False
 
 
 class Bishop(ChessPiece):
@@ -206,36 +207,20 @@ class Bishop(ChessPiece):
     representation -- a string to be displayed when printing to console.
 
     Methods:
-    is_threatened -- static method
+    is_threatened -- class method
     """
     piece_type = PieceType.Bishop
     representation = "Bishop"
 
-    @staticmethod
-    def is_threatened(attacking_piece, attacking_row, attacking_column, row,
+    @classmethod
+    def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
+                      row,
                       column):
-        """Override ChessPiece is_threatened abstract static method."""
+        """Override ChessPiece is_threatened abstract class method."""
         if diagonals_danger(attacking_row, attacking_column, row, column):
             return True
 
-        if attacking_piece.piece_type == PieceType.Knight:
-            if knight_danger(attacking_row, attacking_column, row,
-                             column):
-                return True
-
-        elif attacking_piece.piece_type == PieceType.King and \
-                king_danger(attacking_row, attacking_column, row,
-                            column):
+        if cls._check_common_threats(attacking_piece, attacking_row,
+                                     attacking_column, row, column):
             return True
-
-        elif attacking_piece.piece_type == PieceType.Rook and \
-                row_or_column_danger(attacking_row, attacking_column, row,
-                                     column):
-            return True
-
-        elif attacking_piece.piece_type == PieceType.Queen and \
-                (diagonals_danger(attacking_row, attacking_column, row,
-                                  column) or
-                     row_or_column_danger(attacking_row, attacking_column,
-                                          row, column)):
-            return True
+        return False
