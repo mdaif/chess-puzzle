@@ -66,7 +66,7 @@ class ChessChallengeEngine(object):
 
         current_piece = pieces[0]
         solutions = []
-        seen = []
+        seen = set()
 
         for solution in prev_solutions:
 
@@ -87,8 +87,9 @@ class ChessChallengeEngine(object):
                         result = sorted(
                             solution + [(current_piece, row, column)],
                             key=str)
-                        if result not in seen:
-                            seen.append(result)
+                        hashable_result = str(result)
+                        if hashable_result not in seen:
+                            seen.add(hashable_result)
                             solutions.append(result)
         self.pieces = self.pieces[1:]
         return solutions, self.pieces
@@ -123,7 +124,7 @@ class ChessChallengeEngine(object):
 def main():
     """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-    input_pieces = [Bishop, Rook]
+    input_pieces = [Rook] * 2
     challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:
