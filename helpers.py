@@ -2,7 +2,7 @@
 import math
 
 
-def king_danger(row, column, attacking_row, attacking_column):
+def king_danger(attacking_row, attacking_column, row, column):
     """Check if a piece is safe from a king.
     
     returns True if the distance is less than or equal one square from all 
@@ -38,7 +38,7 @@ def knight_danger(row, column, attacking_row, attacking_column):
          (1, 2)])
 
 
-def diagonals_danger(row, column, attacking_row, attacking_column):
+def diagonals_danger(attacking_row, attacking_column, row, column):
     """Check safety of pieces on the same diagonals, both left and right ones.
 
     Arguments:
@@ -52,7 +52,7 @@ def diagonals_danger(row, column, attacking_row, attacking_column):
                    row - attacking_row) else False
 
 
-def row_or_column_danger(row, column, attacking_row, attacking_column):
+def row_or_column_danger(attacking_row, attacking_column, row, column):
     """Check safety of pieces on the same row or the
     same column
 

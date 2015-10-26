@@ -5,8 +5,7 @@ input is provided via argparse parser.
 """
 
 import datetime
-from helpers import king_danger, knight_danger, diagonals_danger, \
-    row_or_column_danger
+from pieces import King, Queen, Bishop, Knight,Rook
 
 
 class ChessChallengeEngine(object):
@@ -26,8 +25,8 @@ class ChessChallengeEngine(object):
         board_width -- width of the board
         board_height -- height of the board
         """
-        self.pieces = sorted(
-            pieces)  # sorting lexicographically to make sure all possible
+        self.pieces = sorted(pieces, key=lambda piece: str(piece))
+        # sorting lexicographically to make sure all possible
         # permutations of the same problem maps to the same input
 
         self.board_width = board_width
@@ -77,7 +76,7 @@ class ChessChallengeEngine(object):
             # number of pieces > 7 (that's an empirical observation). That
             # is a corner case and we should then only examine the row next
             # to the row we already examined.
-            rows = len(solution) + 2 if set(self.all_pieces) == {'Queen'} \
+            rows = len(solution) + 2 if set(self.all_pieces) == {Queen} \
                                         and len(
                 self.all_pieces) > 7 else self.board_height + 1
             for row in range(1, rows):
@@ -86,7 +85,8 @@ class ChessChallengeEngine(object):
                                               solution):
 
                         result = sorted(
-                            solution + [(current_piece, row, column)])
+                            solution + [(current_piece, row, column)],
+                            key=lambda element: str(element))
                         if result not in seen:
                             seen.append(result)
                             solutions.append(result)
@@ -113,135 +113,18 @@ class ChessChallengeEngine(object):
         for chess_piece in candidate_solution:
 
             attacking_piece, attacking_row, attacking_column = chess_piece
-            if current_piece == 'Queen':
+            if current_piece.is_threatened(attacking_piece, attacking_row,
+                                           attacking_column, row, column):
+                return True
 
-                if diagonals_danger(row, column, attacking_row,
-                                    attacking_column) or \
-                        row_or_column_danger(row, column, attacking_row,
-                                             attacking_column):
-                    return True
-
-                if attacking_piece == 'Knight':
-                    if knight_danger(attacking_row, attacking_column, row,
-                                     column):
-                        return True
-
-            elif current_piece == 'King':
-                if king_danger(attacking_row, attacking_column, row, column):
-                    return True
-                if attacking_piece == 'Rook' and \
-                        row_or_column_danger(row, column, attacking_row,
-                                             attacking_column):
-                    return True
-
-                elif attacking_piece == 'Queen' and \
-                        (diagonals_danger(row, column, attacking_row,
-                                          attacking_column) or
-                            row_or_column_danger(row, column,
-                                                 attacking_row,
-                                                 attacking_column)):
-                    return True
-
-                elif attacking_piece == 'Bishop' and \
-                        diagonals_danger(row, column, attacking_row,
-                                         attacking_column):
-                    return True
-
-                elif attacking_piece == 'Knight' and knight_danger(
-                        attacking_row, attacking_column, row, column):
-                    return True
-
-            elif current_piece == 'Rook':
-                if row_or_column_danger(row, column, attacking_row,
-                                        attacking_column):
-                    return True
-
-                if attacking_piece == 'King' and king_danger(attacking_row,
-                                                             attacking_column,
-                                                             row, column):
-                    return True
-
-                elif attacking_piece == 'Knight' and knight_danger(
-                        attacking_row, attacking_column, row,
-                        column):
-                    return True
-
-                elif attacking_piece == 'Queen' and \
-                        (diagonals_danger(row, column, attacking_row,
-                                          attacking_column) or
-                            row_or_column_danger(row, column,
-                                                 attacking_row,
-                                                 attacking_column)):
-                    return True
-
-                elif attacking_piece == 'Bishop' and \
-                        diagonals_danger(row, column, attacking_row,
-                                         attacking_column):
-                    return True
-
-            elif current_piece == 'Knight':
-                if knight_danger(attacking_row, attacking_column, row,
-                                 column):
-                    return True
-
-                if attacking_piece == 'Bishop' and \
-                        diagonals_danger(row, column, attacking_row,
-                                         attacking_column):
-                    return True
-
-                elif attacking_piece == 'King' and \
-                        king_danger(attacking_row, attacking_column, row,
-                                    column):
-                    return True
-
-                elif attacking_piece == 'Rook' and \
-                        row_or_column_danger(row, column, attacking_row,
-                                             attacking_column):
-                    return True
-
-                elif attacking_piece == 'Queen' and \
-                        (diagonals_danger(row, column, attacking_row,
-                                          attacking_column) or
-                            row_or_column_danger(row, column,
-                                                 attacking_row,
-                                                 attacking_column)):
-                    return True
-
-            elif current_piece == 'Bishop' or attacking_piece == 'Bishop':
-                if diagonals_danger(row, column, attacking_row,
-                                    attacking_column):
-                    return True
-
-                if attacking_piece == 'Knight':
-                    if knight_danger(attacking_row, attacking_column, row,
-                                     column):
-                        return True
-
-                elif attacking_piece == 'King' and \
-                        king_danger(attacking_row, attacking_column, row,
-                                    column):
-                    return True
-
-                elif attacking_piece == 'Rook' and \
-                        row_or_column_danger(row, column, attacking_row,
-                                             attacking_column):
-                    return True
-
-                elif attacking_piece == 'Queen' and \
-                        (diagonals_danger(row, column, attacking_row,
-                                          attacking_column) or
-                            row_or_column_danger(row, column, attacking_row,
-                                                 attacking_column)):
-                    return True
         return False
 
 
 def main():
     """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-    input_pieces = ['King', 'King', 'Queen', 'Queen', 'Bishop', 'Bishop',
-                    'Knight']
-    challenge = ChessChallengeEngine(input_pieces, 7, 7)
+    input_pieces = [King, King, Rook]
+    challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:
         print end_result
