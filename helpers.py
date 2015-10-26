@@ -4,10 +4,10 @@ import math
 
 def king_danger(attacking_row, attacking_column, row, column):
     """Check if a piece is safe from a king.
-    
-    returns True if the distance is less than or equal one square from all 
+
+    returns True if the distance is less than or equal one square from all
     directions
-    
+
     Arguments:
     row -- first piece's row number
     column -- first piece's column number

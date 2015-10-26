@@ -5,7 +5,7 @@ input is provided via argparse parser.
 """
 
 import datetime
-from pieces import King, Queen, Bishop, Knight,Rook
+from pieces import King, Queen, Rook  # , Bishop, Knight,
 
 
 class ChessChallengeEngine(object):
@@ -25,7 +25,7 @@ class ChessChallengeEngine(object):
         board_width -- width of the board
         board_height -- height of the board
         """
-        self.pieces = sorted(pieces, key=lambda piece: str(piece))
+        self.pieces = sorted(pieces, key=str)
         # sorting lexicographically to make sure all possible
         # permutations of the same problem maps to the same input
 
@@ -39,7 +39,7 @@ class ChessChallengeEngine(object):
 
         # we check if all the pieces are exhausted when all the board rows
         # are checked, if not , we start over.
-        for piece in range(len(self.pieces)):
+        for _ in range(len(self.pieces)):
             for _ in range(self.board_height):  # for each row of the board
                 solutions, self.pieces = \
                     self._add_one_piece(self.pieces, self.board_height,
@@ -86,7 +86,7 @@ class ChessChallengeEngine(object):
 
                         result = sorted(
                             solution + [(current_piece, row, column)],
-                            key=lambda element: str(element))
+                            key=str)
                         if result not in seen:
                             seen.append(result)
                             solutions.append(result)
