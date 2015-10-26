@@ -1,10 +1,11 @@
-"""Uses Strategy pattern to define each chess piece's behavior in a class."""
+"""Use OOP to define each chess piece's behavior in a class."""
 from helpers import diagonals_danger, king_danger, knight_danger, \
     row_or_column_danger
 
 
 class PieceType(object):
     """Enumerate all possible types of pieces."""
+
     Queen = 1
     King = 2
     Bishop = 3
@@ -16,14 +17,17 @@ class RepresentationMetaClass(type):
     """Enable custom representation for class objects."""
 
     def __str__(cls):
+        """Represent the class object."""
         return cls.representation
 
     def __repr__(cls):
+        """Represent the class object."""
         return cls.representation
 
 
 class ChessPiece(object):
     """Provide a base class for Chess pieces."""
+
     __metaclass__ = RepresentationMetaClass
 
     piece_type = None
@@ -33,7 +37,7 @@ class ChessPiece(object):
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
                       row,
                       column):
-        """Checks if current piece is threatened by another piece.
+        """Check if current piece is threatened by another piece.
 
         An abstract method, implemented at each class that extends
         ChessPiece, Each chess piece defines it's own behavior against the
@@ -63,7 +67,6 @@ class ChessPiece(object):
         row -- the row at which the current piece is located.
         column -- the column at which the current piece is located.
         """
-
         if attacking_piece.piece_type == PieceType.Rook and \
                 row_or_column_danger(attacking_row, attacking_column, row,
                                      column):
@@ -101,6 +104,7 @@ class Queen(ChessPiece):
     Methods:
     is_threatened -- class method
     """
+
     piece_type = PieceType.Queen
     representation = 'Queen'
 
@@ -129,6 +133,7 @@ class King(ChessPiece):
     Methods:
     is_threatened -- class method
     """
+
     piece_type = PieceType.King
     representation = 'King'
 
@@ -155,6 +160,7 @@ class Rook(ChessPiece):
     Methods:
     is_threatened -- class method
     """
+
     piece_type = PieceType.Rook
     representation = 'Rook'
 
@@ -182,6 +188,7 @@ class Knight(ChessPiece):
     Methods:
     is_threatened -- class method
     """
+
     piece_type = PieceType.Knight
     representation = 'Knight'
 
@@ -209,6 +216,7 @@ class Bishop(ChessPiece):
     Methods:
     is_threatened -- class method
     """
+
     piece_type = PieceType.Bishop
     representation = "Bishop"
 

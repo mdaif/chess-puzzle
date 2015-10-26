@@ -9,13 +9,14 @@ from pieces import King, Queen, Rook, Bishop, Knight
 
 
 class ChessChallengeEngine(object):
-    """ Manage chess challenge solution.
+    """Manage chess challenge solution.
 
     ChessChallengeEngine is the core component of the module,
     it is initialized by the chess pieces to be put on the chess board,
     the board width, and the board height, running execute public method
     results in calculating the unique configurations of the pieces
-    placement on the board"""
+    placement on the board
+    """
 
     def __init__(self, pieces, board_width, board_height):
         """Initialize ChessChallengeEngine with pieces, board size.
@@ -55,7 +56,7 @@ class ChessChallengeEngine(object):
         #return solutions
 
     def _add_one_piece(self, pieces, columns, prev_solutions):
-        """Adds next chess piece to a safe place on the board.
+        """Add next chess piece to a safe place on the board.
 
         Arguments:
         pieces -- list of remaining chess pieces to be placed.
@@ -63,7 +64,6 @@ class ChessChallengeEngine(object):
         prev_solutions -- a list of all the previously calculated safe
         positions.
         """
-
         current_piece = pieces[0]
         solutions = []
         seen = set()
@@ -96,7 +96,7 @@ class ChessChallengeEngine(object):
 
     @staticmethod
     def _under_attack(current_piece, row, column, candidate_solution):
-        """Checks if the position is safe.
+        """Check if the position is safe.
 
         Internal method, each time _add_one_piece finds a potential
         location (indicated by row, column) it calls this method to make
@@ -110,7 +110,6 @@ class ChessChallengeEngine(object):
         column -- the next column to be scanned for threats.
         candidate_solution -- one of the safe solutions calculated so far.
         """
-
         for chess_piece in candidate_solution:
 
             attacking_piece, attacking_row, attacking_column = chess_piece
@@ -124,7 +123,7 @@ class ChessChallengeEngine(object):
 def main():
     """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-    input_pieces = [Rook, Queen]
+    input_pieces = [King, Bishop]
     challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:

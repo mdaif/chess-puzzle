@@ -1,4 +1,4 @@
-"""collect all helper functions to be used by the main module"""
+"""collect all helper functions to be used by the main module."""
 import math
 
 
@@ -31,7 +31,6 @@ def knight_danger(row, column, attacking_row, attacking_column):
     attacking_row -- second piece's row number
     attacking_column -- second piece-s column number
     """
-
     return (row == attacking_row and column == attacking_column) or any(
         (attacking_row - row, attacking_column - column) == delta for delta in
         [(-1, -2), (1, -2), (-2, -1), (2, -1), (-2, 1), (2, 1), (-1, 2),
@@ -53,8 +52,7 @@ def diagonals_danger(attacking_row, attacking_column, row, column):
 
 
 def row_or_column_danger(attacking_row, attacking_column, row, column):
-    """Check safety of pieces on the same row or the
-    same column
+    """Check safety of pieces on the same row or the same column.
 
     Arguments:
     row -- first piece's row number
