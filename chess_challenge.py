@@ -5,7 +5,7 @@ input is provided via argparse parser.
 """
 
 import datetime
-from pieces import King, Queen, Rook  # , Bishop, Knight,
+from pieces import King, Queen, Rook, Bishop, Knight
 
 
 class ChessChallengeEngine(object):
@@ -52,7 +52,7 @@ class ChessChallengeEngine(object):
                 if not self.pieces:
                     return solutions
 
-        return solutions
+        #return solutions
 
     def _add_one_piece(self, pieces, columns, prev_solutions):
         """Adds next chess piece to a safe place on the board.
@@ -123,7 +123,7 @@ class ChessChallengeEngine(object):
 def main():
     """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-    input_pieces = [King, King, Rook]
+    input_pieces = [Bishop, Rook]
     challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:

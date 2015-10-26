@@ -702,7 +702,6 @@ class ChessChallengeTest(unittest.TestCase):
         result = engine.execute()
         self.assertListEqual(expected, result)
 
-
     def test_1_queen_1_knight_4_by_4_board(self):
         """That should result in 40 configurations"""
         expected = [
@@ -752,5 +751,29 @@ class ChessChallengeTest(unittest.TestCase):
         result = engine.execute()
         self.assertListEqual(expected, result)
 
+    def test_1_rook_1_bishop_3_by_3_board(self):
+        """1 rook 1 bishop 3 by 3 board"""
+        expected = [
+            [(Bishop, 1, 1), (Rook, 2, 3)],
+            [(Bishop, 1, 1), (Rook, 3, 2)],
+            [(Bishop, 1, 2), (Rook, 3, 1)],
+            [(Bishop, 1, 2), (Rook, 3, 3)],
+            [(Bishop, 1, 3), (Rook, 2, 1)],
+            [(Bishop, 1, 3), (Rook, 3, 2)],
+            [(Bishop, 2, 1), (Rook, 1, 3)],
+            [(Bishop, 2, 1), (Rook, 3, 3)],
+            [(Bishop, 2, 3), (Rook, 1, 1)],
+            [(Bishop, 2, 3), (Rook, 3, 1)],
+            [(Bishop, 3, 1), (Rook, 1, 2)],
+            [(Bishop, 3, 1), (Rook, 2, 3)],
+            [(Bishop, 3, 2), (Rook, 1, 1)],
+            [(Bishop, 3, 2), (Rook, 1, 3)],
+            [(Bishop, 3, 3), (Rook, 1, 2)],
+            [(Bishop, 3, 3), (Rook, 2, 1)],
+        ]
+        pieces = [Bishop, Rook]
+        engine = ChessChallengeEngine(pieces, 3, 3)
+        result = engine.execute()
+        self.assertListEqual(expected, result)
 if __name__ == '__main__':
     unittest.main()
