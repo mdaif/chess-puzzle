@@ -4,8 +4,9 @@ The core functionality of the module is the ChessChallengeEngine class. The
 input is provided via argparse parser.
 """
 
-import datetime
 from pieces import King, Queen, Rook, Bishop, Knight
+import argparse
+import datetime
 
 
 class ChessChallengeEngine(object):
@@ -53,7 +54,7 @@ class ChessChallengeEngine(object):
                 if not self.pieces:
                     return solutions
 
-        #return solutions
+        return []
 
     def _add_one_piece(self, pieces, columns, prev_solutions):
         """Add next chess piece to a safe place on the board.
@@ -122,9 +123,36 @@ class ChessChallengeEngine(object):
 
 def main():
     """"run if the file is executed as a standalone app."""
+    parser = argparse.ArgumentParser(description='Find all unique '
+                                                 'configurations of a set of '
+                                                 'normal chess pieces on a '
+                                                 'chess board')
+    parser.add_argument('-n', action="store", type=int, default=3,
+                        help="board width", required=True)
+    parser.add_argument('-m', action="store", type=int, default=3,
+                        help="board height", required=True)
+    parser.add_argument('--kings', action="store", type=int, default=0,
+                        help="Number of kings")
+    parser.add_argument('--queens', action="store", type=int, default=0,
+                        help="Number of queens")
+    parser.add_argument('--bishops', action="store", type=int, default=0,
+                        help="Number of bishops")
+    parser.add_argument('--knights', action="store", type=int, default=0,
+                        help="Number of knights")
+    parser.add_argument('--rooks', action="store", type=int, default=0,
+                        help="number of rooks")
+
+    input_args = parser.parse_args()
+    board_width = input_args.__dict__.pop('n')
+    board_height = input_args.__dict__.pop('m')
+    args_to_pieces = {'kings': King, 'queens': Queen, 'bishops': Bishop,
+                      'knights': Knight, 'rooks': Rook}
+    input_pieces = []
+    for piece_name, piece_count in input_args.__dict__.items():
+        input_pieces.extend([args_to_pieces[piece_name]
+                             for _ in range(piece_count)])
     start_time = datetime.datetime.now()
-    input_pieces = [King, Bishop]
-    challenge = ChessChallengeEngine(input_pieces, 3, 3)
+    challenge = ChessChallengeEngine(input_pieces, board_width, board_height)
     end_results = challenge.execute()
     for end_result in end_results:
         print end_result
@@ -133,7 +161,6 @@ def main():
           "seconds, number of unique solutions " \
           "found: {}".format((end_time - start_time).total_seconds(),
                              int(len(end_results)))
-
 
 if __name__ == "__main__":
     main()
