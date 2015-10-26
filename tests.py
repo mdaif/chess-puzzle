@@ -803,5 +803,30 @@ class ChessChallengeTest(unittest.TestCase):
         result = engine.execute()
         self.assertListEqual(expected, result)
 
+    def test_1_queen_1_rook_3_by_3_board(self):
+        expected = [
+            [(Queen, 1, 1), (Rook, 2, 3)],
+            [(Queen, 1, 1), (Rook, 3, 2)],
+            [(Queen, 1, 2), (Rook, 3, 1)],
+            [(Queen, 1, 2), (Rook, 3, 3)],
+            [(Queen, 1, 3), (Rook, 2, 1)],
+            [(Queen, 1, 3), (Rook, 3, 2)],
+            [(Queen, 2, 1), (Rook, 1, 3)],
+            [(Queen, 2, 1), (Rook, 3, 3)],
+            [(Queen, 2, 3), (Rook, 1, 1)],
+            [(Queen, 2, 3), (Rook, 3, 1)],
+            [(Queen, 3, 1), (Rook, 1, 2)],
+            [(Queen, 3, 1), (Rook, 2, 3)],
+            [(Queen, 3, 2), (Rook, 1, 1)],
+            [(Queen, 3, 2), (Rook, 1, 3)],
+            [(Queen, 3, 3), (Rook, 1, 2)],
+            [(Queen, 3, 3), (Rook, 2, 1)],
+        ]
+
+        pieces = [Queen, Rook]
+        engine = ChessChallengeEngine(pieces, 3, 3)
+        result = engine.execute()
+        self.assertListEqual(expected, result)
+
 if __name__ == '__main__':
     unittest.main()

@@ -124,7 +124,7 @@ class ChessChallengeEngine(object):
 def main():
     """"run if the file is executed as a standalone app."""
     start_time = datetime.datetime.now()
-    input_pieces = [Rook] * 2
+    input_pieces = [Rook, Queen]
     challenge = ChessChallengeEngine(input_pieces, 3, 3)
     end_results = challenge.execute()
     for end_result in end_results:
