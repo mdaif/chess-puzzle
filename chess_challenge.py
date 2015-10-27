@@ -41,10 +41,10 @@ class ChessChallengeEngine(object):
 
         # we check if all the pieces are exhausted when all the board rows
         # are checked, if not , we start over.
-        for _ in range(len(self.pieces)):
+        while self.pieces:
             for _ in range(self.board_height):  # for each row of the board
-                solutions, self.pieces = \
-                    self._add_one_piece(self.pieces, self.board_height,
+                solutions = \
+                    self._add_one_piece(self.board_height,
                                         solutions)
                 # after first iteration, we can find the inserted pieces are
                 #  less than the expected to be inserted.
@@ -56,7 +56,7 @@ class ChessChallengeEngine(object):
 
         return []
 
-    def _add_one_piece(self, pieces, columns, prev_solutions):
+    def _add_one_piece(self, columns, prev_solutions):
         """Add next chess piece to a safe place on the board.
 
         Arguments:
@@ -65,21 +65,13 @@ class ChessChallengeEngine(object):
         prev_solutions -- a list of all the previously calculated safe
         positions.
         """
-        current_piece = pieces[0]
+        print "#"
+        current_piece = self.pieces[0]
+        rows = self.board_height + 1
         solutions = []
         seen = set()
 
         for solution in prev_solutions:
-
-            # the number of rows to be examined differs based on the type of
-            #  piece being played ... we can always check for all rows but
-            # it becomes very expensive when you have all queens and the
-            # number of pieces > 7 (that's an empirical observation). That
-            # is a corner case and we should then only examine the row next
-            # to the row we already examined.
-            rows = len(solution) + 2 if set(self.all_pieces) == {Queen} \
-                                        and len(
-                self.all_pieces) > 7 else self.board_height + 1
             for row in range(1, rows):
                 for column in range(1, columns + 1):
                     if not self._under_attack(current_piece, row, column,
@@ -93,7 +85,7 @@ class ChessChallengeEngine(object):
                             seen.add(hashable_result)
                             solutions.append(result)
         self.pieces = self.pieces[1:]
-        return solutions, self.pieces
+        return solutions
 
     @staticmethod
     def _under_attack(current_piece, row, column, candidate_solution):

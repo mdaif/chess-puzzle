@@ -117,9 +117,17 @@ class Queen(ChessPiece):
                 row_or_column_danger(attacking_row, attacking_column, row,
                                      column):
             return True
-        if cls._check_common_threats(attacking_piece, attacking_row,
-                                     attacking_column, row, column):
+        # if cls._check_common_threats(attacking_piece, attacking_row,
+        #                              attacking_column, row, column):
+        #     return True
+
+        # Queen can only be threatened by a knight, as an optimization,
+        # let it check for knight attacks only.
+        if attacking_piece.piece_type == PieceType.Knight and knight_danger(
+                attacking_row, attacking_column, row, column):
             return True
+
+
         return False
 
 
