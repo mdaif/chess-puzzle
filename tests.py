@@ -978,6 +978,32 @@ class ChessChallengeTest(unittest.TestCase):
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
         self.assertListEqual(sorted(expected), sorted(result))
+
+    def test_asymmetric_board_1(self):
+        """Test 1 queen, 1 bishop, 3 x 2 board"""
+        expected = [
+            [(Bishop, 2, 3), (Queen, 1, 1)],
+            [(Bishop, 2, 1), (Queen, 1, 3)],
+            [(Bishop, 1, 3), (Queen, 2, 1)],
+            [(Bishop, 1, 1), (Queen, 2, 3)]
+        ]
+        pieces = [Bishop, Queen]
+        engine = ChessChallengeEngine(pieces, 3, 2)
+        result = engine.execute()
+        self.assertListEqual(sorted(expected), sorted(result))
+
+    def test_asymmetric_board_2(self):
+        """Test 1 queen, 1 bishop, 2 x 3 board"""
+        expected = [
+            [(Bishop, 3, 2), (Queen, 1, 1)],
+            [(Bishop, 3, 1), (Queen, 1, 2)],
+            [(Bishop, 1, 2), (Queen, 3, 1)],
+            [(Bishop, 1, 1), (Queen, 3, 2)],
+        ]
+        pieces = [Bishop, Queen]
+        engine = ChessChallengeEngine(pieces, 2, 3)
+        result = engine.execute()
+        self.assertListEqual(sorted(expected), sorted(result))
         
 if __name__ == '__main__':
     unittest.main()
