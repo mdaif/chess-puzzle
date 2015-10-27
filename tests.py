@@ -980,7 +980,7 @@ class ChessChallengeTest(unittest.TestCase):
         self.assertListEqual(sorted(expected), sorted(result))
 
     def test_asymmetric_board_1(self):
-        """Test 1 queen, 1 bishop, 3 x 2 board"""
+        """Test 1 queen, 1 bishop, 3 x 2 board."""
         expected = [
             [(Bishop, 2, 3), (Queen, 1, 1)],
             [(Bishop, 2, 1), (Queen, 1, 3)],
@@ -993,7 +993,7 @@ class ChessChallengeTest(unittest.TestCase):
         self.assertListEqual(sorted(expected), sorted(result))
 
     def test_asymmetric_board_2(self):
-        """Test 1 queen, 1 bishop, 2 x 3 board"""
+        """Test 1 queen, 1 bishop, 2 x 3 board."""
         expected = [
             [(Bishop, 3, 2), (Queen, 1, 1)],
             [(Bishop, 3, 1), (Queen, 1, 2)],
