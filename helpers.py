@@ -41,10 +41,10 @@ def diagonals_danger(attacking_row, attacking_column, row, column):
     """Check safety of pieces on the same diagonals, both left and right ones.
 
     Arguments:
-    row -- first piece's row number
-    column -- first piece's column number
     attacking_row -- second piece's row number
     attacking_column -- second piece-s column number
+    row -- first piece's row number
+    column -- first piece's column number
     """
     return True if (column - attacking_column) == (row - attacking_row) or \
                    (column - attacking_column) == -(
@@ -55,10 +55,10 @@ def row_or_column_danger(attacking_row, attacking_column, row, column):
     """Check safety of pieces on the same row or the same column.
 
     Arguments:
-    row -- first piece's row number
-    column -- first piece's column number
     attacking_row -- second piece's row number
     attacking_column -- second piece-s column number
+    row -- first piece's row number
+    column -- first piece's column number
     """
     return True if attacking_row == row or attacking_column == column else \
         False

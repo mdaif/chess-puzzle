@@ -107,6 +107,9 @@ class Queen(ChessPiece):
 
     piece_type = PieceType.Queen
     representation = 'Queen'
+    comparison_factor = 1  # Queen eliminates a row, a column,
+    # both diagonals from next piece's comparisons, so queens should come
+    # first.
 
     @classmethod
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
@@ -117,16 +120,12 @@ class Queen(ChessPiece):
                 row_or_column_danger(attacking_row, attacking_column, row,
                                      column):
             return True
-        # if cls._check_common_threats(attacking_piece, attacking_row,
-        #                              attacking_column, row, column):
-        #     return True
 
         # Queen can only be threatened by a knight, as an optimization,
         # let it check for knight attacks only.
         if attacking_piece.piece_type == PieceType.Knight and knight_danger(
                 attacking_row, attacking_column, row, column):
             return True
-
 
         return False
 
@@ -144,6 +143,8 @@ class King(ChessPiece):
 
     piece_type = PieceType.King
     representation = 'King'
+    comparison_factor = 4  # Kings eliminate the least amount of future
+    # comparisons so it comes last.
 
     @classmethod
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
@@ -171,6 +172,9 @@ class Rook(ChessPiece):
 
     piece_type = PieceType.Rook
     representation = 'Rook'
+    comparison_factor = 2  # Rooks eliminate a row and a column making
+    # them
+    #  the strongest after the queen.
 
     @classmethod
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
@@ -199,6 +203,8 @@ class Knight(ChessPiece):
 
     piece_type = PieceType.Knight
     representation = 'Knight'
+    comparison_factor = 3  # Knights eliminate 7 positions, making them the
+    #  in position after bishops and rooks.
 
     @classmethod
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,
@@ -227,6 +233,8 @@ class Bishop(ChessPiece):
 
     piece_type = PieceType.Bishop
     representation = "Bishop"
+    comparison_factor = 2  # Bishops eliminate two diagonals, making them
+    # as powerful as rooks.
 
     @classmethod
     def is_threatened(cls, attacking_piece, attacking_row, attacking_column,

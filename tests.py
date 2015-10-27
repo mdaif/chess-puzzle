@@ -499,7 +499,7 @@ class ChessChallengeTest(unittest.TestCase):
                      (Queen, 5, 6), (Queen, 6, 2), (Queen, 7, 7),
                      (Queen, 8, 5)]]
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_3_bishops_3_by_3_board(self):
         """Test 3 bishops, 3 by 3 board."""
@@ -534,7 +534,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Bishop, Bishop, Bishop]
         engine = ChessChallengeEngine(pieces, len(pieces), len(pieces))
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_2_knights_1_bishop_3_by_3_board(self):
         """Test 2 knights, 1 bishop, 3 by 3 board."""
@@ -580,7 +580,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Bishop, Knight, Knight]
         engine = ChessChallengeEngine(pieces, len(pieces), len(pieces))
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_impossible_configuration(self):
         """Test 8 queens in a 6 * 6 board."""
@@ -588,7 +588,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Queen] * 8
         engine = ChessChallengeEngine(pieces, 6, 6)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_1_king_3_by_3_board(self):
         """Test 1 king, 3 by 3 board."""
@@ -606,7 +606,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [King]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_1_queen_3_by_3_board(self):
         """Test 1 queen, 3 by 3 board."""
@@ -624,7 +624,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Queen]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_2_kings_3_by_3_board(self):
         """Test 2 kings, 3 by 3 board."""
@@ -649,7 +649,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [King, King]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_1_knight_3_by_3_board(self):
         """Test 1 knight, 3 by 3 board."""
@@ -667,7 +667,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Knight]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_2_knights_3_by_3_board(self):
         """Test 2 knights, 3 by 3 board."""
@@ -704,7 +704,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Knight, Knight]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_4_knights_2_rooks_4_by_4_board(self):
         """Test 4 knights, 2 rooks, 4 x 4 board.
@@ -733,7 +733,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Knight, Knight, Knight, Knight, Rook, Rook]
         engine = ChessChallengeEngine(pieces, 4, 4)
         result = engine.execute()
-        self.assertEqual(expected, result)
+        self.assertEqual(sorted(expected), sorted(result))
 
     def test_2_kings_1_rook_3_by_3_board(self):
         """Test 2 kings, 1 rook, 3 by 3 board.
@@ -751,7 +751,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [King, King, Rook]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_1_queen_1_knight_3_by_3_board(self):
         """Test 1 queen, 1 knight, 3 by 3 board.
@@ -762,7 +762,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Knight, Queen]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_1_queen_1_knight_4_by_4_board(self):
         """Test 1 queen, 1 knight, 4 by 4 board."""
@@ -811,7 +811,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Knight, Queen]
         engine = ChessChallengeEngine(pieces, 4, 4)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_1_rook_1_bishop_3_by_3_board(self):
         """Test 1 rook 1 bishop 3 by 3 board."""
@@ -836,7 +836,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Bishop, Rook]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_2_rooks_3_by_3_board(self):
         """Test two rooks on the same board."""
@@ -863,7 +863,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Rook, Rook]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_1_queen_1_rook_3_by_3_board(self):
         """Test 1 queen, 1 rook 3 by 3 board."""
@@ -889,7 +889,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [Queen, Rook]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
     def test_1_king_1_bishop_3_by_3_board(self):
         """Test 1 king, 1 bishop, 3 by 3 board."""
@@ -926,7 +926,7 @@ class ChessChallengeTest(unittest.TestCase):
         pieces = [King, Bishop]
         engine = ChessChallengeEngine(pieces, 3, 3)
         result = engine.execute()
-        self.assertListEqual(expected, result)
+        self.assertListEqual(sorted(expected), sorted(result))
 
 if __name__ == '__main__':
     unittest.main()

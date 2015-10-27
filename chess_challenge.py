@@ -2,6 +2,9 @@
 
 The core functionality of the module is the ChessChallengeEngine class. The
 input is provided via argparse parser.
+Module contains the following:
+ChessChallengeEngine -- Manage challenge solution
+main -- run if the file is executed as a standalone app
 """
 
 from pieces import King, Queen, Rook, Bishop, Knight
@@ -13,7 +16,7 @@ class ChessChallengeEngine(object):
     """Manage chess challenge solution.
 
     ChessChallengeEngine is the core component of the module,
-    it is initialized by the chess pieces to be put on the chess board,
+    it is initialized with the chess pieces to be put on the chess board,
     the board width, and the board height, running execute public method
     results in calculating the unique configurations of the pieces
     placement on the board
@@ -27,13 +30,16 @@ class ChessChallengeEngine(object):
         board_width -- width of the board
         board_height -- height of the board
         """
-        self.pieces = sorted(pieces, key=str)
-        # sorting lexicographically to make sure all possible
-        # permutations of the same problem maps to the same input
+        self.pieces = sorted(pieces,
+                             key=lambda piece: piece.comparison_factor)
+        # sorting by a heuristic value to make sure all possible
+        # permutations of the same problem map to the same input, the trick
+        # here is to include the pieces that when put on the board earlier
+        # will reduce the space of partial configurations to be validated
+        # against when placing each future piece.
 
         self.board_width = board_width
         self.board_height = board_height
-        self.all_pieces = pieces  # won't be decremented at each step
 
     def execute(self):
         """Return all unique configurations."""
@@ -60,12 +66,10 @@ class ChessChallengeEngine(object):
         """Add next chess piece to a safe place on the board.
 
         Arguments:
-        pieces -- list of remaining chess pieces to be placed.
         columns -- the upper bound of columns to be scanned for a threat.
         prev_solutions -- a list of all the previously calculated safe
         positions.
         """
-        print "#"
         current_piece = self.pieces[0]
         rows = self.board_height + 1
         solutions = []
@@ -146,9 +150,10 @@ def main():
     start_time = datetime.datetime.now()
     challenge = ChessChallengeEngine(input_pieces, board_width, board_height)
     end_results = challenge.execute()
+    end_time = datetime.datetime.now()
     for end_result in end_results:
         print end_result
-    end_time = datetime.datetime.now()
+
     print "Program finished in approximately {} " \
           "seconds, number of unique solutions " \
           "found: {}".format((end_time - start_time).total_seconds(),
