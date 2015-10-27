@@ -1,4 +1,11 @@
-"""collect all helper functions to be used by the main module."""
+"""collect all helper functions to be used by the main module.
+
+Functions:
+king_danger -- Check if a piece is safe from a king.
+knight_danger -- Check if a piece is safe from a knight.
+diagonals_danger -- Check safety of pieces on the same diagonals.
+row_or_column_danger -- row_or_column_danger
+"""
 import math
 
 

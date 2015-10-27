@@ -1,4 +1,15 @@
-"""Use OOP to define each chess piece's behavior in a class."""
+"""Use OOP to define each chess piece's behavior in a class.
+
+Classes:
+PieceType -- Enumerate all possible types of pieces.
+RepresentationMetaClass -- Enable custom representation for class objects.
+ChessPiece -- Provide a base class for Chess pieces.
+Queen -- Extend ChessPiece to implement a Queen.
+King -- Extend ChessPiece to implement a King.
+Rook -- Extend ChessPiece to implement a Rook.
+Knight -- Extend ChessPiece to implement a Knight.
+Bishop -- Extend ChessPiece to implement a Bishop.
+"""
 from helpers import diagonals_danger, king_danger, knight_danger, \
     row_or_column_danger
 
@@ -26,7 +37,11 @@ class RepresentationMetaClass(type):
 
 
 class ChessPiece(object):
-    """Provide a base class for Chess pieces."""
+    """Provide a base class for Chess pieces.
+
+    Public Methods:
+    is_threatened -- Check if current piece is threatened by another piece.
+    """
 
     __metaclass__ = RepresentationMetaClass
 

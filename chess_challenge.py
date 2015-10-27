@@ -19,7 +19,10 @@ class ChessChallengeEngine(object):
     it is initialized with the chess pieces to be put on the chess board,
     the board width, and the board height, running execute public method
     results in calculating the unique configurations of the pieces
-    placement on the board
+    placement on the board.
+
+    Public Methods:
+    execute -- Return all unique configurations.
     """
 
     def __init__(self, pieces, board_width, board_height):
