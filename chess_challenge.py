@@ -53,7 +53,7 @@ class ChessChallengeEngine(object):
         while self.pieces:
             for _ in range(self.board_height):  # for each row of the board
                 solutions = \
-                    self._add_one_piece(self.board_height,
+                    self._add_one_piece(self.board_width,
                                         solutions)
                 # after first iteration, we can find the inserted pieces are
                 #  less than the expected to be inserted.
