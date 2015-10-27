@@ -126,9 +126,9 @@ def main():
                                                  'configurations of a set of '
                                                  'normal chess pieces on a '
                                                  'chess board')
-    parser.add_argument('-n', action="store", type=int, default=3,
+    parser.add_argument('-width', action="store", type=int,
                         help="board width", required=True)
-    parser.add_argument('-m', action="store", type=int, default=3,
+    parser.add_argument('-height', action="store", type=int,
                         help="board height", required=True)
     parser.add_argument('--kings', action="store", type=int, default=0,
                         help="Number of kings")
@@ -142,8 +142,8 @@ def main():
                         help="number of rooks")
 
     input_args = parser.parse_args()
-    board_width = input_args.__dict__.pop('n')
-    board_height = input_args.__dict__.pop('m')
+    board_width = input_args.__dict__.pop('width')
+    board_height = input_args.__dict__.pop('height')
     args_to_pieces = {'kings': King, 'queens': Queen, 'bishops': Bishop,
                       'knights': Knight, 'rooks': Rook}
     input_pieces = []
