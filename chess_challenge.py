@@ -63,8 +63,6 @@ class ChessChallengeEngine(object):
                 if not self.pieces:
                     return solutions
 
-        return []
-
     def _add_one_piece(self, columns, prev_solutions):
         """Add next chess piece to a safe place on the board.
 
